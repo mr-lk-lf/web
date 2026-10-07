@@ -1,0 +1,22 @@
+{{ define "main" }}
+{{ $projects := where site.RegularPages "Section" "projects" }}
+{{ $feat := index $projects.ByDate.Reverse 0 }}
+<div class="cols">
+  <section class="col-main">
+    <h2 class="sec">{{ i18n "featured" }}</h2>
+    {{ with $feat }}
+    <article class="feature">
+      <a class="thumb" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">{{ (resources.Get (printf "figs/%s.svg" .Params.fig)).Content | safeHTML }}</a>
+      <div>
+        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        <p class="meta">{{ .Params.language }} · {{ .Params.license }} · {{ .Date | time.Format "Jan 2006" }}</p>
+        <p class="desc">{{ .Params.summary }}</p>
+      </div>
+    </article>
+    {{ end }}
+    <h2 class="sec">{{ i18n "latest" }} <a class="all" href="{{ "/projects/" | relLangURL }}">{{ i18n "seeAll" }} →</a></h2>
+    <div class="grid">{{ range first 3 (after 1 $projects.ByDate.Reverse) }}{{ partial "card.html" . }}{{ end }}</div>
+  </section>
+  <aside class="col-side">{{ partial "about-box.html" . }}</aside>
+</div>
+{{ end }}

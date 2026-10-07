@@ -1,0 +1,18 @@
+<div class="topbar"><div class="wrap">
+  <a class="mark" href="{{ "/" | relLangURL }}" aria-label="mr-lk-lf">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path class="ln" d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path class="ln soft" d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg>
+    <span>mr-lk-lf</span>
+  </a>
+  <nav class="langs" aria-label="{{ i18n "language" }}">
+    {{ $page := . }}
+    {{ range site.Languages }}
+      {{ $l := . }}
+      {{ if eq $l.Lang $page.Language.Lang }}<span class="on" aria-current="true">{{ upper $l.Lang }}</span>
+      {{ else }}
+        {{ $href := printf "%s/" $l.Lang | relURL }}
+        {{ range $page.Translations }}{{ if eq .Language.Lang $l.Lang }}{{ $href = .RelPermalink }}{{ end }}{{ end }}
+        <a href="{{ $href }}" hreflang="{{ $l.Lang }}" lang="{{ $l.Lang }}">{{ upper $l.Lang }}</a>
+      {{ end }}
+    {{ end }}
+  </nav>
+</div></div>

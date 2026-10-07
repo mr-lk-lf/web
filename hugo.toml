@@ -1,0 +1,35 @@
+baseURL = "https://mr-lk-lf.github.io/web/"
+title = "mr-lk-lf"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = true
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+paginate = 3
+
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    languageCode = "en"
+    contentDir = "content/en"
+    weight = 1
+    [languages.en.params]
+      tagline = "Builds small tools, skills and design systems."
+  [languages.es]
+    languageName = "Español"
+    languageCode = "es"
+    contentDir = "content/es"
+    weight = 2
+    [languages.es.params]
+      tagline = "Construye herramientas pequeñas, skills y sistemas de diseño."
+
+[params]
+  github = "https://github.com/mr-lk-lf"
+  # placeholder until the lofisons site is live
+  lofisons = "#"
+
+[markup.goldmark.renderer]
+  unsafe = false
+
+[outputs]
+  home = ["HTML", "RSS"]

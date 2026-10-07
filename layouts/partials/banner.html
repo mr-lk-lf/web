@@ -1,0 +1,8 @@
+{{ $fig := resources.Get "figs/banner.svg" }}
+<div class="banner">
+  {{ $fig.Content | safeHTML }}
+  <div class="banner-links">
+    <a href="{{ site.Params.github }}" rel="me">GitHub</a>
+    {{ partial "lofisons-link.html" . }}
+  </div>
+</div>

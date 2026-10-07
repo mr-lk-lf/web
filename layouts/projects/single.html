@@ -1,0 +1,10 @@
+{{ define "main" }}
+<article class="doc">
+  <p class="back"><a href="{{ "/projects/" | relLangURL }}">{{ i18n "backToProjects" }}</a></p>
+  <div class="thumb wide">{{ (resources.Get (printf "figs/%s.svg" .Params.fig)).Content | safeHTML }}</div>
+  <h1>{{ .Title }}</h1>
+  <p class="meta">{{ .Params.language }} · {{ .Params.license }} · {{ .Date | time.Format "Jan 2006" }}</p>
+  <div class="prose">{{ .Content }}</div>
+  <p><a class="btn" href="https://github.com/{{ .Params.repo }}" rel="noopener">{{ i18n "source" }} ↗</a></p>
+</article>
+{{ end }}

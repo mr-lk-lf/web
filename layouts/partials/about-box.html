@@ -1,0 +1,9 @@
+<div class="box">
+  <h2 class="sec">{{ i18n "about" }}</h2>
+  <p>{{ i18n "founder" }} {{ partial "lofisons-link.html" . }}.</p>
+  <p class="tag">{{ site.Params.tagline }}</p>
+  <ul class="links">
+    <li><a href="{{ site.Params.github }}" rel="me">GitHub</a></li>
+    <li><a href="{{ "/about/" | relLangURL }}">{{ i18n "about" }}</a></li>
+  </ul>
+</div>

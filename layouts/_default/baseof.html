@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="{{ site.Language.LanguageCode }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>{{ if .IsHome }}{{ site.Title }} · {{ site.Params.tagline }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Params.summary }}{{ . }}{{ else }}{{ site.Params.tagline }}{{ end }}">
+  {{ range .AllTranslations }}<link rel="alternate" hreflang="{{ .Language.LanguageCode }}" href="{{ .Permalink }}">
+  {{ end }}
+  <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap">
+  {{ $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+</head>
+<body>
+  <a class="skip" href="#main">{{ i18n "skip" }}</a>
+  {{ partial "topbar.html" . }}
+  <div class="channel">
+    {{ partial "banner.html" . }}
+    {{ partial "header.html" . }}
+    {{ partial "tabs.html" . }}
+    <main id="main">{{ block "main" . }}{{ end }}</main>
+    <footer class="foot"><span>© {{ now.Year }} mr-lk-lf</span><span>{{ i18n "tribute" }}</span></footer>
+  </div>
+</body>
+</html>

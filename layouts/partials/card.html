@@ -1,0 +1,11 @@
+{{/* a "video" tile: figure thumbnail + title + meta line */}}
+{{ $fig := resources.Get (printf "figs/%s.svg" (.Params.fig | default "banner")) }}
+<article class="card">
+  <a class="thumb" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">
+    {{ if $fig }}{{ $fig.Content | safeHTML }}{{ end }}
+    <span class="badge">{{ .Params.language }}</span>
+  </a>
+  <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+  <p class="meta">{{ .Params.language }} · {{ .Params.license }} · {{ .Date | time.Format "Jan 2006" }}</p>
+  <p class="desc">{{ .Params.summary }}</p>
+</article>
