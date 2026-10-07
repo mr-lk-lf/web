@@ -1,7 +1,7 @@
 baseURL = "https://mr-lk-lf.github.io/web/"
 title = "lowkey lofison"
 defaultContentLanguage = "en"
-defaultContentLanguageInSubdir = true
+defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
 paginate = 3

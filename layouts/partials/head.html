@@ -1,16 +1,16 @@
 <section class="row">
-  <h2><a href="{{ "/" | relLangURL }}">lowkey lofison</a></h2>
+  <h2><a href="{{ site.Home.RelPermalink }}">lowkey lofison</a></h2>
   <div>
     <p>{{ i18n "founder" }} {{ partial "lofisons.html" . }}</p>
     <p class="mute">{{ site.Params.tagline }}</p>
     <nav>
-      <a href="{{ "/" | relLangURL }}"{{ if .IsHome }} class="on"{{ end }}>{{ i18n "home" }}</a>
-      <a href="{{ "/blog/" | relLangURL }}"{{ if eq .Section "blog" }} class="on"{{ end }}>{{ i18n "blog" }}</a>
+      <a href="{{ site.Home.RelPermalink }}"{{ if .IsHome }} class="on"{{ end }}>{{ i18n "home" }}</a>
+      <a href="{{ (site.GetPage "/blog").RelPermalink }}"{{ if eq .Section "blog" }} class="on"{{ end }}>{{ i18n "blog" }}</a>
       <span class="sp"></span>
       {{ $page := . }}
       {{ range site.Languages }}{{ $l := . }}
         {{ if eq $l.Lang $page.Language.Lang }}<span class="on">{{ $l.Lang }}</span>{{ else }}
-          {{ $href := printf "%s/" $l.Lang | relURL }}
+          {{ $href := cond (eq $l.Lang "en") "" (printf "%s/" $l.Lang) | relURL }}
           {{ range $page.Translations }}{{ if eq .Language.Lang $l.Lang }}{{ $href = .RelPermalink }}{{ end }}{{ end }}
           <a href="{{ $href }}" hreflang="{{ $l.Lang }}" lang="{{ $l.Lang }}">{{ $l.Lang }}</a>{{ end }}
       {{ end }}
