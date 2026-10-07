@@ -1,6 +1,6 @@
 {{ define "main" }}
-<p><a href="{{ "/blog/" | relLangURL }}">{{ i18n "back" }}</a></p>
-{{ partial "rule.html" .Title }}
-<p class="meta">{{ .Date | time.Format "2 Jan 2006" }}</p>
-<div class="prose">{{ .Content }}</div>
+<section class="row"><h2><a href="{{ "/blog/" | relLangURL }}">{{ i18n "back" }}</a></h2><div>
+  <h3>{{ .Title }}</h3><p class="meta">{{ .Date | time.Format "2 Jan 2006" }}</p>
+  <div class="prose">{{ .Content }}</div>
+</div></section>
 {{ end }}

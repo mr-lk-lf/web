@@ -1,11 +1,10 @@
-{{ partial "rule.html" (i18n "projects") }}
 {{ $pag := .Paginate ((where site.RegularPages "Section" "projects").ByDate.Reverse) }}
 <ol class="list" style="counter-reset:n {{ mul (sub $pag.PageNumber 1) (len $pag.First.Pages) }}">
 {{ range $pag.Pages }}
   <li>
     <a href="{{ .RelPermalink }}">{{ .Title }}</a>
     <span class="meta">{{ .Params.language }} · {{ .Params.license }} · {{ .Date | time.Format "Jan 2006" }}</span>
-    <span class="desc">{{ .Params.summary }}</span>
+    <span class="mute">{{ .Params.summary }}</span>
   </li>
 {{ end }}
 </ol>

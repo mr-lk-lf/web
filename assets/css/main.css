@@ -1,42 +1,64 @@
-/* A text file that happens to be a website. Dark only. */
-:root{color-scheme:dark;--bg:#0b0b0a;--fg:#d8d6cf;--mute:#8a887f;--dim:#5f5d57}
+/* A drafting sheet on graph paper. Dark only. */
+:root{color-scheme:dark;--bg:#0b0b0a;--fg:#d8d6cf;--mute:#8a887f;--dim:#5f5d57;
+  --bd:rgba(216,214,207,.16);--gl:rgba(216,214,207,.045);--gl2:rgba(216,214,207,.09);--tick:rgba(216,214,207,.6)}
 *{box-sizing:border-box}
 html{background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.7 "Geist Mono",ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace}
-main{max-width:64ch;margin:0 auto;padding:40px 20px 80px}
-h1,h2,p,ol,ul,dl,dd{margin:0;padding:0;font:inherit}
+body{margin:0;color:var(--fg);font:14.5px/1.7 "Geist Mono",ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--gl2) 1px,transparent 1px),linear-gradient(90deg,var(--gl2) 1px,transparent 1px),
+                   linear-gradient(var(--gl) 1px,transparent 1px),linear-gradient(90deg,var(--gl) 1px,transparent 1px);
+  background-size:96px 96px,96px 96px,16px 16px,16px 16px;background-position:center top}
+h1,h2,h3,p,ol,ul,dl,dd{margin:0;padding:0;font:inherit}
 a{color:inherit;text-decoration:underline;text-decoration-color:var(--dim);text-underline-offset:3px}
 a:hover{text-decoration-color:var(--fg)}
 a:focus-visible{outline:1px solid var(--fg);outline-offset:3px}
-header>*+*{margin-top:2px}
-h1 a{text-decoration:none}
-h1{font-size:1.4em;font-weight:400}
-.cur{display:inline-block;width:.6em;height:1.05em;background:var(--fg);margin-left:4px;vertical-align:-.15em;animation:blink 1.1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-header p{color:var(--mute)}
-.soon{color:var(--mute)}
+i{font-style:normal}
+
+/* the sheet */
+.sheet{position:relative;max-width:880px;margin:56px auto;background:var(--bg);border:1px solid var(--bd)}
+.ticks{position:absolute;inset:-1px;pointer-events:none}
+.ticks i{position:absolute;width:10px;height:10px;border:0 solid var(--tick)}
+.ticks i:nth-child(1){left:-6px;top:-6px;border-width:1px 0 0 1px}
+.ticks i:nth-child(2){right:-6px;top:-6px;border-width:1px 1px 0 0}
+.ticks i:nth-child(3){left:-6px;bottom:-6px;border-width:0 0 1px 1px}
+.ticks i:nth-child(4){right:-6px;bottom:-6px;border-width:0 1px 1px 0}
+
+/* rows are cells: label left, content right; the dividers are dashes that crawl */
+.row{display:grid;grid-template-columns:200px minmax(0,1fr);position:relative}
+.row+.row::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:repeating-linear-gradient(90deg,var(--tick) 0 6px,transparent 6px 12px);opacity:.55;animation:march 1.6s linear infinite}
+@keyframes march{to{background-position:12px 0}}
+.row>h2{padding:22px 20px;border-right:1px solid var(--bd);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:400}
+.row>h2 i{color:var(--dim);margin-right:6px}
+.row>h2 a{text-decoration:none}.row>h2 a:hover{color:var(--fg)}
+.row>div{padding:22px 24px;min-width:0}
+.row:first-of-type>h2{color:var(--fg);letter-spacing:.02em;text-transform:none;font-size:15px}
+
+.mute{color:var(--mute)}.meta{color:var(--dim);font-size:.9em}
+h3{font-size:18px;font-weight:400;margin-bottom:10px}
 nav{display:flex;gap:18px;margin-top:14px}
 nav .sp{flex:1}
 nav a,nav span{color:var(--mute);text-decoration:none}
 nav a:hover,nav .on{color:var(--fg)}
 nav .on{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--fg)}
-section{margin-top:44px}
-h2{font-weight:400}
-.rule{display:block;overflow:hidden;white-space:nowrap;color:var(--dim);width:0;animation:type .9s steps(40) .1s forwards;user-select:none}
-@keyframes type{to{width:100%}}
-section+*{margin-top:14px}
+.soon{color:var(--mute)}
 .prose p+p{margin-top:1em}
-.list{list-style:none;display:grid;gap:18px}
-
-.list li{display:grid;grid-template-columns:3ch 1fr;column-gap:1ch}
-.list li>*{grid-column:2}
+.list{list-style:none;display:grid;gap:20px}
+ol.list li{display:grid;grid-template-columns:3ch 1fr;column-gap:1ch}
+ol.list li>*{grid-column:2}
 ol.list li::before{counter-increment:n;content:counter(n,decimal-leading-zero);grid-column:1;grid-row:1;color:var(--dim)}
-.meta,.desc,.muted{color:var(--mute)}
-.meta{font-size:.9em}
-.kv{display:grid;grid-template-columns:max-content 1fr;column-gap:2ch}
+.list li>span{display:block}
+.kv{display:grid;grid-template-columns:max-content 1fr;column-gap:3ch;row-gap:2px}
 .kv dt{color:var(--mute)}
 .pager{display:flex;gap:2ch;margin-top:26px;color:var(--mute)}
 .pager a{text-decoration:none}.pager a:hover{color:var(--fg)}
 .pager .on{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
 .pager .off{opacity:.35}
-@media (prefers-reduced-motion:reduce){.rule{width:100%;animation:none}.cur{animation:none}}
+
+@media (max-width:640px){
+  .sheet{margin:24px 14px}
+  .row{grid-template-columns:1fr}
+  .row>h2{border-right:0;padding:16px 16px 0}
+  .row>div{padding:8px 16px 18px}
+}
+@media (prefers-reduced-motion:reduce){.row+.row::before{animation:none}}

@@ -27,6 +27,8 @@ paginate = 3
   github = "https://github.com/mr-lk-lf"
   # placeholder until the lofisons site is live
   lofisons = "#"
+  x = "https://x.com/lowkey_lofison"
+  youtube = "https://www.youtube.com/@lowkey_lofison"
 
 [markup.goldmark.renderer]
   unsafe = false
