@@ -1,6 +1,11 @@
 {{ define "main" }}
 <section class="row"><h2><i>•</i> {{ i18n "about" }}</h2><div class="prose">{{ .Content }}</div></section>
 <section class="row"><h2><i>•</i> {{ i18n "projects" }}</h2><div>{{ partial "projects.html" . }}</div></section>
+<section class="row"><h2><i>•</i> {{ i18n "blog" }}</h2><div>
+{{ with where site.RegularPages "Section" "blog" }}
+<ul class="list">{{ range first 3 .ByDate.Reverse }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="meta">{{ .Date | time.Format "2 Jan 2006" }}</span><span class="mute">{{ .Summary }}</span></li>{{ end }}</ul>
+{{ else }}<p class="mute">{{ i18n "noPosts" }}</p>{{ end }}
+</div></section>
 <section class="row"><h2><i>•</i> {{ i18n "links" }}</h2><div>
   <dl class="kv">
     <dt>github</dt><dd><a href="{{ site.Params.github }}" rel="me">@mr-lk-lf ↗</a></dd>

@@ -1,5 +1,5 @@
 {{ define "main" }}
-<section class="row"><h2><a href="{{ "/blog/" | relLangURL }}">{{ i18n "back" }}</a></h2><div>
+<section class="row"><h2><a href="{{ (site.GetPage "/blog").RelPermalink }}">{{ i18n "back" }}</a></h2><div>
   <h3>{{ .Title }}</h3><p class="meta">{{ .Date | time.Format "2 Jan 2006" }}</p>
   <div class="prose">{{ .Content }}</div>
 </div></section>
