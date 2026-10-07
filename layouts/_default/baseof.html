@@ -13,10 +13,12 @@
   <link rel="stylesheet" href="{{ $css.RelPermalink }}">
 </head>
 <body>
+<canvas id="bayer" aria-hidden="true"></canvas>
 <main class="sheet">
   <span class="ticks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
   {{ partial "head.html" . }}
   {{ block "main" . }}{{ end }}
 </main>
+{{ $js := resources.Get "js/bayer.js" | resources.Minify | resources.Fingerprint }}<script src="{{ $js.RelPermalink }}" defer></script>
 </body>
 </html>

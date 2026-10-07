@@ -23,6 +23,8 @@ jobs:
           sudo dpkg -i hugo.deb
       - id: pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
       - uses: actions/upload-pages-artifact@v3
         with:
