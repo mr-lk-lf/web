@@ -10,6 +10,6 @@ link is a placeholder for now.
 
 This site is a tribute to the YouTube channel pages of ~2012: a banner, a header bar,
 tabs and an endless grid of uploads. Here the uploads are projects, everything is drawn
-in outline, and the scroll is paginated.
+as plain text on a grid, and the scroll is paginated.
 
 Find the code on [GitHub](https://github.com/mr-lk-lf).

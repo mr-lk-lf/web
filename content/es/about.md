@@ -10,6 +10,6 @@ enlace es un placeholder por ahora.
 
 Este sitio es un guiño a las páginas de canal de YouTube de ~2012: un banner, una barra
 de cabecera, pestañas y una cuadrícula casi infinita de videos. Aquí los videos son
-proyectos, todo está dibujado en outline y el scroll está paginado.
+proyectos, todo es texto y rejilla y el scroll está paginado.
 
 El código está en [GitHub](https://github.com/mr-lk-lf).

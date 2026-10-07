@@ -1,23 +1,18 @@
 {{ define "main" }}
 {{ $pag := .Paginate (.Pages.ByDate.Reverse) }}
-<h2 class="sec">{{ i18n "blog" }}</h2>
+<h2 class="sec"><span>{{ i18n "blog" }}</span><span>{{ len .Pages }}</span></h2>
 {{ if $pag.Pages }}
-<div class="rows">
+<div class="list">
 {{ range $pag.Pages }}
-  <article class="row">
-    <div class="thumb">{{ (resources.Get "figs/banner.svg").Content | safeHTML }}</div>
-    <div>
-      <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-      <p class="meta">{{ .Date | time.Format "2 Jan 2006" }}</p>
-      <p class="desc">{{ .Summary }}</p>
-    </div>
+  <article class="item">
+    <p class="meta">{{ .Date | time.Format "2 Jan 2006" }}</p>
+    <div><h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3><p class="desc">{{ .Summary }}</p></div>
   </article>
 {{ end }}
 </div>
 {{ partial "pager.html" . }}
 {{ else }}
-<div class="empty">
-  <div class="thumb">{{ (resources.Get "figs/banner.svg").Content | safeHTML }}</div>
+<div class="empty field" style="margin-top:20px">
   <h3>{{ i18n "noPostsTitle" }}</h3>
   <p>{{ i18n "noPostsBody" }}</p>
 </div>

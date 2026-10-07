@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{ $pag := .Paginate (.Pages.ByDate.Reverse) }}
-<h2 class="sec">{{ i18n "projects" }}</h2>
-<div class="grid">{{ range $pag.Pages }}{{ partial "card.html" . }}{{ end }}</div>
+<h2 class="sec"><span>{{ i18n "projects" }}</span><span>{{ len .Pages }}</span></h2>
+<div class="grid">{{ range $i, $p := $pag.Pages }}{{ partial "card.html" (dict "p" $p "n" (add (mul (sub $pag.PageNumber 1) (len $pag.First.Pages)) $i 1)) }}{{ end }}</div>
 {{ partial "pager.html" . }}
 {{ end }}
