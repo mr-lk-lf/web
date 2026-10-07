@@ -1,5 +1,5 @@
 {{ $pag := .Paginate ((where site.RegularPages "Section" "projects").ByDate.Reverse) }}
-<ol class="list" style="counter-reset:n {{ mul (sub $pag.PageNumber 1) (len $pag.First.Pages) }}">
+<ol class="list">
 {{ range $pag.Pages }}
   <li>
     <a href="{{ .RelPermalink }}">{{ .Title }}</a>

@@ -43,7 +43,7 @@ nav .on{text-decoration:underline;text-underline-offset:3px;text-decoration-colo
 .list{list-style:none;display:grid;gap:20px}
 ol.list li{display:grid;grid-template-columns:3ch 1fr;column-gap:1ch}
 ol.list li>*{grid-column:2}
-ol.list li::before{counter-increment:n;content:counter(n,decimal-leading-zero);grid-column:1;grid-row:1;color:var(--dim)}
+ol.list li::before{content:"•";grid-column:1;grid-row:1;color:var(--dim)}
 .list li>span{display:block}
 .kv{display:grid;grid-template-columns:max-content 1fr;column-gap:3ch;row-gap:2px}
 .kv dt{color:var(--mute)}
