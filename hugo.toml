@@ -1,5 +1,5 @@
 baseURL = "https://mr-lk-lf.github.io/web/"
-title = "mr-lk-lf"
+title = "lowkey lofison"
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = true
 enableRobotsTXT = true
@@ -14,14 +14,14 @@ paginate = 3
     contentDir = "content/en"
     weight = 1
     [languages.en.params]
-      tagline = "Builds small tools, skills and design systems."
+      tagline = "We build for artists, devs and anyone who wants fair tools and content."
   [languages.es]
     languageName = "Español"
     languageCode = "es"
     contentDir = "content/es"
     weight = 2
     [languages.es.params]
-      tagline = "Construye herramientas pequeñas, skills y sistemas de diseño."
+      tagline = "Construimos para artistas, devs y para quienes quieren herramientas y contenido justos."
 
 [params]
   github = "https://github.com/mr-lk-lf"

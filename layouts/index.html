@@ -6,7 +6,7 @@
       <h2 class="sec"><span>{{ i18n "featured" }}</span></h2>
       {{ with index $projects 0 }}
       <article class="feature">
-        <a class="cell field" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true"><span class="idx">01</span><span class="row"><span class="big">{{ .Params.language }}</span><span class="idx">{{ .Params.license }}</span></span>{{ partial "ticks.html" . }}</a>
+        <a class="cell field" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true"><span class="row"><span class="idx">01</span><span class="idx">{{ .Params.license }}</span></span><span class="big">{{ .Params.language }}</span>{{ partial "ticks.html" . }}</a>
         <div>
           <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
           <p class="meta">{{ .Params.language }} · {{ .Params.license }} · {{ .Date | time.Format "Jan 2006" }}</p>

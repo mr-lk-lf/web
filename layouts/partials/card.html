@@ -2,8 +2,7 @@
 {{ $p := .p }}
 <article class="card">
   <a class="cell field" href="{{ $p.RelPermalink }}" tabindex="-1" aria-hidden="true">
-    <span class="idx">{{ printf "%02d" .n }}</span>
-    <span class="row"><span class="big">{{ $p.Params.language }}</span><span class="idx">{{ $p.Params.license }}</span></span>
+    <span class="row"><span class="idx">{{ printf "%02d" .n }}</span><span class="idx">{{ $p.Params.license }}</span></span><span class="big">{{ $p.Params.language }}</span>
   </a>
   <h3><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h3>
   <p class="meta">{{ $p.Params.language }} · {{ $p.Params.license }} · {{ $p.Date | time.Format "Jan 2006" }}</p>

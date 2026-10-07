@@ -19,11 +19,10 @@
   <a class="skip" href="#main">{{ i18n "skip" }}</a>
   {{ partial "topbar.html" . }}
   <div class="channel">
-    {{ partial "banner.html" . }}
     {{ partial "header.html" . }}
     {{ partial "tabs.html" . }}
     <main id="main">{{ block "main" . }}{{ end }}</main>
-    <footer class="foot"><span>© {{ now.Year }} mr-lk-lf</span><span>{{ i18n "tribute" }}</span></footer>
+    <footer class="foot"><span>© {{ now.Year }} lowkey lofison</span><span>{{ i18n "tribute" }}</span></footer>
   </div>
 </body>
 </html>
