@@ -1,1 +1,1 @@
-{{ define "main" }}<article class="doc"><h1>{{ .Title }}</h1><div class="prose">{{ .Content }}</div></article>{{ end }}
+{{ define "main" }}{{ partial "rule.html" .Title }}<div class="prose">{{ .Content }}</div>{{ end }}

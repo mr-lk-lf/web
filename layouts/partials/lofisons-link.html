@@ -1,3 +1,0 @@
-{{ $u := site.Params.lofisons }}
-{{ if or (eq $u "#") (eq $u "") }}<a class="soon" href="#" aria-disabled="true" title="{{ i18n "soonTitle" }}">lofisons<sup>{{ i18n "soon" }}</sup></a>
-{{ else }}<a href="{{ $u }}" rel="noopener">lofisons</a>{{ end }}

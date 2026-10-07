@@ -1,8 +1,6 @@
 {{ define "main" }}
-<article class="doc">
-  <p class="back label"><a href="{{ "/blog/" | relLangURL }}">{{ i18n "backToBlog" }}</a></p>
-  <h1>{{ .Title }}</h1>
-  <p class="meta">{{ .Date | time.Format "2 Jan 2006" }}</p>
-  <div class="prose">{{ .Content }}</div>
-</article>
+<p><a href="{{ "/blog/" | relLangURL }}">{{ i18n "back" }}</a></p>
+{{ partial "rule.html" .Title }}
+<p class="meta">{{ .Date | time.Format "2 Jan 2006" }}</p>
+<div class="prose">{{ .Content }}</div>
 {{ end }}

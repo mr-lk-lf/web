@@ -1,20 +1,8 @@
 {{ define "main" }}
+{{ partial "rule.html" (i18n "blog") }}
 {{ $pag := .Paginate (.Pages.ByDate.Reverse) }}
-<h2 class="sec"><span>{{ i18n "blog" }}</span><span>{{ len .Pages }}</span></h2>
 {{ if $pag.Pages }}
-<div class="list">
-{{ range $pag.Pages }}
-  <article class="item">
-    <p class="meta">{{ .Date | time.Format "2 Jan 2006" }}</p>
-    <div><h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3><p class="desc">{{ .Summary }}</p></div>
-  </article>
-{{ end }}
-</div>
+<ul class="list">{{ range $pag.Pages }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="meta">{{ .Date | time.Format "2 Jan 2006" }}</span><span class="desc">{{ .Summary }}</span></li>{{ end }}</ul>
 {{ partial "pager.html" . }}
-{{ else }}
-<div class="empty field" style="margin-top:20px">
-  <h3>{{ i18n "noPostsTitle" }}</h3>
-  <p>{{ i18n "noPostsBody" }}</p>
-</div>
-{{ end }}
+{{ else }}<p class="muted">{{ i18n "noPosts" }}</p>{{ end }}
 {{ end }}

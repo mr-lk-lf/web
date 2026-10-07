@@ -1,6 +1,0 @@
-{{ define "main" }}
-<article class="doc">
-  <h1>{{ .Title }}</h1>
-  <div class="prose">{{ replace .Content "LOFISONS_URL" site.Params.lofisons | safeHTML }}</div>
-</article>
-{{ end }}

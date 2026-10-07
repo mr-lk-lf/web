@@ -1,25 +1,10 @@
 {{ define "main" }}
-{{ $projects := (where site.RegularPages "Section" "projects").ByDate.Reverse }}
-<div class="cols">
-  <section class="stack">
-    <div>
-      <h2 class="sec"><span>{{ i18n "featured" }}</span></h2>
-      {{ with index $projects 0 }}
-      <article class="feature">
-        <a class="cell field" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true"><span class="row"><span class="idx">01</span><span class="idx">{{ .Params.license }}</span></span><span class="big">{{ .Params.language }}</span>{{ partial "ticks.html" . }}</a>
-        <div>
-          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-          <p class="meta">{{ .Params.language }} · {{ .Params.license }} · {{ .Date | time.Format "Jan 2006" }}</p>
-          <p class="desc">{{ .Params.summary }}</p>
-        </div>
-      </article>
-      {{ end }}
-    </div>
-    <div>
-      <h2 class="sec"><span>{{ i18n "latest" }}</span><a href="{{ "/projects/" | relLangURL }}">{{ i18n "seeAll" }} →</a></h2>
-      <div class="grid">{{ range $i, $p := first 3 (after 1 $projects) }}{{ partial "card.html" (dict "p" $p "n" (add $i 2)) }}{{ end }}</div>
-    </div>
-  </section>
-  <aside>{{ partial "about-box.html" . }}</aside>
-</div>
+{{ partial "rule.html" (i18n "about") }}
+<div class="prose">{{ .Content }}</div>
+{{ partial "projects.html" . }}
+{{ partial "rule.html" (i18n "links") }}
+<dl class="kv">
+  <dt>github:</dt><dd><a href="{{ site.Params.github }}" rel="me">@mr-lk-lf</a></dd>
+  <dt>lofisons:</dt><dd>{{ partial "lofisons.html" . }}</dd>
+</dl>
 {{ end }}

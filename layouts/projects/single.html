@@ -1,14 +1,11 @@
 {{ define "main" }}
-<article class="doc">
-  <p class="back label"><a href="{{ "/projects/" | relLangURL }}">{{ i18n "backToProjects" }}</a></p>
-  <h1>{{ .Title }}</h1>
-  <p class="desc">{{ .Params.summary }}</p>
-  <dl class="spec field">
-    <div><dt>{{ i18n "language" }}</dt><dd>{{ .Params.language }}</dd></div>
-    <div><dt>{{ i18n "license" }}</dt><dd>{{ .Params.license }}</dd></div>
-    <div><dt>{{ i18n "published" }}</dt><dd>{{ .Date | time.Format "Jan 2006" }}</dd></div>
-    <div><dt>{{ i18n "source" }}</dt><dd><a class="u" href="https://github.com/{{ .Params.repo }}" rel="noopener">{{ .Params.repo }} ↗</a></dd></div>
-  </dl>
-  <div class="prose">{{ .Content }}</div>
-</article>
+<p><a href="{{ "/" | relLangURL }}">{{ i18n "back" }}</a></p>
+{{ partial "rule.html" .Title }}
+<div class="prose"><p>{{ .Params.summary }}</p>{{ .Content }}</div>
+<dl class="kv">
+  <dt>{{ i18n "language" }}:</dt><dd>{{ .Params.language }}</dd>
+  <dt>{{ i18n "license" }}:</dt><dd>{{ .Params.license }}</dd>
+  <dt>{{ i18n "published" }}:</dt><dd>{{ .Date | time.Format "Jan 2006" }}</dd>
+  <dt>{{ i18n "source" }}:</dt><dd><a href="https://github.com/{{ .Params.repo }}" rel="noopener">{{ .Params.repo }} ↗</a></dd>
+</dl>
 {{ end }}

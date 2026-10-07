@@ -1,0 +1,18 @@
+<header>
+  <h1><a href="{{ "/" | relLangURL }}">lowkey lofison</a><span class="cur" aria-hidden="true"></span></h1>
+  <p>{{ i18n "founder" }} {{ partial "lofisons.html" . }}</p>
+  <p>{{ site.Params.tagline }}</p>
+  <nav>
+    <a href="{{ "/" | relLangURL }}"{{ if .IsHome }} class="on"{{ end }}>{{ i18n "home" }}</a>
+    <a href="{{ "/blog/" | relLangURL }}"{{ if eq .Section "blog" }} class="on"{{ end }}>{{ i18n "blog" }}</a>
+    <a href="{{ site.Params.github }}" rel="me">github ↗</a>
+    <span class="sp"></span>
+    {{ $page := . }}
+    {{ range site.Languages }}{{ $l := . }}
+      {{ if eq $l.Lang $page.Language.Lang }}<span class="on">{{ $l.Lang }}</span>{{ else }}
+        {{ $href := printf "%s/" $l.Lang | relURL }}
+        {{ range $page.Translations }}{{ if eq .Language.Lang $l.Lang }}{{ $href = .RelPermalink }}{{ end }}{{ end }}
+        <a href="{{ $href }}" hreflang="{{ $l.Lang }}" lang="{{ $l.Lang }}">{{ $l.Lang }}</a>{{ end }}
+    {{ end }}
+  </nav>
+</header>
