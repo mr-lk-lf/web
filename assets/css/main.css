@@ -1,4 +1,4 @@
-/* A drafting sheet over a barely-there Bayer field (see js/bayer.js). Dark only. */
+/* A drafting sheet over a barely-there marble field (see js/marble.js). Dark only. */
 :root{color-scheme:dark;--bg:#0b0b0a;--fg:#d8d6cf;--mute:#8a887f;--dim:#5f5d57;
   --bd:rgba(216,214,207,.16);--gl:rgba(216,214,207,.045);--gl2:rgba(216,214,207,.09);--tick:rgba(216,214,207,.6)}
 *{box-sizing:border-box}
@@ -60,5 +60,4 @@ ol.list li::before{counter-increment:n;content:counter(n,decimal-leading-zero);g
 }
 @media (prefers-reduced-motion:reduce){.row+.row::before{animation:none}}
 
-#bayer{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;color:#d8d6cf;opacity:.045;
-  -webkit-mask-image:linear-gradient(135deg,#000 0%,transparent 58%);mask-image:linear-gradient(135deg,#000 0%,transparent 58%)}
+#marble{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;image-rendering:pixelated;color:#d8d6cf;opacity:.018}
