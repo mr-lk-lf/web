@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#282e2b">
+  <meta name="theme-color" content="#222623">
   <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Params.summary }}{{ . }}{{ else }}{{ site.Params.tagline }}{{ end }}">
   {{ range .AllTranslations }}<link rel="alternate" hreflang="{{ .Language.LanguageCode }}" href="{{ .Permalink }}">
@@ -17,13 +17,11 @@
 </head>
 <body>
 <a class="skip" href="#main">{{ i18n "skip" }}</a>
-<div class="term">
-  <div class="titlebar" aria-hidden="true"><span class="leds"><i></i><i></i><i></i></span><span class="path">{{ partial "path.html" . }}</span></div>
-  <div class="screen">
-    {{ partial "head.html" . }}
-    <main id="main">{{ block "main" . }}{{ end }}</main>
-    {{ partial "foot.html" . }}
-  </div>
+<div class="screen">
+  {{ partial "head.html" . }}
+  <main id="main">{{ block "main" . }}{{ end }}</main>
+  {{ partial "foot.html" . }}
 </div>
+{{ partial "status.html" . }}
 </body>
 </html>
