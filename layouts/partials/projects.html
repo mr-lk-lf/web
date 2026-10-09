@@ -3,8 +3,8 @@
 {{ range $pag.Pages }}
   <li>
     <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-    <span class="meta">{{ .Params.language }} · {{ .Params.license }} · {{ .Date | time.Format "Jan 2006" }}</span>
-    <span class="mute">{{ .Params.summary }}</span>
+    <span class="meta"><span class="lang">{{ .Params.language }}</span> · {{ .Params.license }} · <time>{{ .Date | time.Format "2006-01" }}</time></span>
+    <span class="sum">{{ .Params.summary }}</span>
   </li>
 {{ end }}
 </ol>

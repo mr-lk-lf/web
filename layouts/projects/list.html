@@ -1,1 +1,1 @@
-{{ define "main" }}<section class="row"><h2><i>•</i> {{ i18n "projects" }}</h2><div>{{ partial "projects.html" . }}</div></section>{{ end }}
+{{ define "main" }}<section class="blk"><h1>{{ partial "cmd.html" (dict "cmd" "ls" "arg" (printf "%s/" (i18n "projects" | lower | urlize))) }}</h1><div class="out">{{ partial "projects.html" . }}</div></section>{{ end }}

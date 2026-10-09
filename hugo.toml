@@ -25,13 +25,15 @@ paginate = 3
 
 [params]
   github = "https://github.com/mr-lk-lf"
-  # placeholder until the lofisons site is live
-  lofisons = "#"
+  lofisons = "https://lofisons.com"
   x = "https://x.com/lowkey_lofison"
   youtube = "https://www.youtube.com/@lowkey_lofison"
 
 [markup.goldmark.renderer]
   unsafe = false
+
+[markup.highlight]
+  noClasses = false
 
 [outputs]
   home = ["HTML", "RSS"]
