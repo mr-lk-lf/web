@@ -1,0 +1,5 @@
+{{- /* ~, ~/blog, ~/blog/hello-world */ -}}
+{{- $p := "~" -}}
+{{- with .Section }}{{ $p = printf "~/%s" . }}{{ end -}}
+{{- if and .IsPage .File }}{{ $p = printf "%s/%s" $p .File.ContentBaseName }}{{ end -}}
+{{- return $p -}}

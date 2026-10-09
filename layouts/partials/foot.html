@@ -1,0 +1,7 @@
+<p class="endprompt" aria-hidden="true">{{ partial "ps1.html" . }} <span class="cursor"></span></p>
+<footer class="status">
+  <span class="mode">{{ with .Section }}{{ . }}{{ else }}{{ i18n "home" }}{{ end }}</span>
+  <span>{{ site.Language.LanguageCode }} · utf-8</span>
+  <span class="sp"></span>
+  {{ with site.Home.OutputFormats.Get "RSS" }}<a href="{{ .RelPermalink }}">rss</a>{{ end }}
+</footer>

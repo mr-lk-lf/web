@@ -1,14 +1,16 @@
 {{ define "main" }}
-<section class="row"><h2><a href="{{ site.Home.RelPermalink }}">{{ i18n "back" }}</a></h2><div>
-  <h3>{{ .Title }}</h3>
-  <div class="prose"><p>{{ .Params.summary }}</p>{{ .Content }}</div>
-</div></section>
-<section class="row"><h2><i>•</i> {{ i18n "source" }}</h2><div>
+<article class="blk">
+  <p class="cmdline"><span class="ps" aria-hidden="true">$</span><span class="cmd">cat</span> <span class="arg">{{ .File.ContentBaseName }}/README.md</span></p>
+  <h1 class="title">{{ .Title }}</h1>
+  <div class="prose" style="margin-top:12px"><p>{{ .Params.summary }}</p>{{ .Content }}</div>
+</article>
+<section class="blk"><h2>{{ partial "cmd.html" (dict "cmd" "cat" "arg" (printf "%s" (i18n "source" | lower | urlize))) }}</h2><div class="out">
   <dl class="kv">
-    <dt>{{ i18n "language" }}</dt><dd>{{ .Params.language }}</dd>
-    <dt>{{ i18n "license" }}</dt><dd>{{ .Params.license }}</dd>
-    <dt>{{ i18n "published" }}</dt><dd>{{ .Date | time.Format "Jan 2006" }}</dd>
+    <dt>{{ i18n "language" | lower }}</dt><dd>{{ .Params.language }}</dd>
+    <dt>{{ i18n "license" | lower }}</dt><dd>{{ .Params.license }}</dd>
+    <dt>{{ i18n "published" | lower }}</dt><dd><time>{{ .Date | time.Format "2006-01" }}</time></dd>
     <dt>repo</dt><dd><a href="https://github.com/{{ .Params.repo }}" rel="noopener">{{ .Params.repo }} ↗</a></dd>
   </dl>
+  <p class="back"><a href="{{ (site.GetPage "/projects").RelPermalink }}">{{ i18n "back" }}</a></p>
 </div></section>
 {{ end }}

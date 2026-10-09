@@ -1,12 +1,12 @@
 {{ define "main" }}
-<section class="row"><h2><i>•</i> {{ i18n "about" }}</h2><div class="prose">{{ .Content }}</div></section>
-<section class="row"><h2><i>•</i> {{ i18n "projects" }}</h2><div>{{ partial "projects.html" . }}</div></section>
-<section class="row"><h2><i>•</i> {{ i18n "blog" }}</h2><div>
+<section class="blk"><h2>{{ partial "cmd.html" (dict "cmd" "cat" "arg" (printf "%s.md" (i18n "about" | lower | urlize))) }}</h2><div class="out prose">{{ .Content }}</div></section>
+<section class="blk"><h2>{{ partial "cmd.html" (dict "cmd" "ls" "arg" (printf "%s/" (i18n "projects" | lower | urlize))) }}</h2><div class="out">{{ partial "projects.html" . }}</div></section>
+<section class="blk"><h2>{{ partial "cmd.html" (dict "cmd" "ls -t" "arg" (printf "%s/" (i18n "blog" | lower | urlize))) }}</h2><div class="out">
 {{ with where site.RegularPages "Section" "blog" }}
-<ul class="list">{{ range first 3 .ByDate.Reverse }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="meta">{{ .Date | time.Format "2 Jan 2006" }}</span><span class="mute">{{ .Summary }}</span></li>{{ end }}</ul>
-{{ else }}<p class="mute">{{ i18n "noPosts" }}</p>{{ end }}
+<ul class="list">{{ range first 3 .ByDate.Reverse }}<li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "2006-01-02" }}</time><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="sum">{{ .Summary }}</span></li>{{ end }}</ul>
+{{ else }}<p class="comment">{{ i18n "noPosts" }}</p>{{ end }}
 </div></section>
-<section class="row"><h2><i>•</i> {{ i18n "links" }}</h2><div>
+<section class="blk"><h2>{{ partial "cmd.html" (dict "cmd" "cat" "arg" (printf "%s.txt" (i18n "links" | lower | urlize))) }}</h2><div class="out">
   <dl class="kv">
     <dt>github</dt><dd><a href="{{ site.Params.github }}" rel="me">@mr-lk-lf ↗</a></dd>
     <dt>x</dt><dd><a href="{{ site.Params.x }}" rel="me">@lowkey_lofison ↗</a></dd>

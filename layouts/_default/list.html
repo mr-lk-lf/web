@@ -1,1 +1,1 @@
-{{ define "main" }}{{ range .Pages }}<p><a href="{{ .RelPermalink }}">{{ .Title }}</a></p>{{ end }}{{ end }}
+{{ define "main" }}<section class="blk"><h1>{{ partial "cmd.html" (dict "cmd" "ls" "arg" (printf "%s/" (.Title | lower | urlize))) }}</h1><div class="out">{{ range .Pages }}<p><a href="{{ .RelPermalink }}">{{ .Title }}</a></p>{{ end }}</div></section>{{ end }}

@@ -1,0 +1,15 @@
+Las fuentes de este sistema se distribuyen bajo la licencia SIL Open Font License, Version 1.1 (https://openfontlicense.org). Se incluyen sin modificar.
+
+Geist
+  Copyright 2024 The Geist Project Authors (https://github.com/vercel/geist-font)
+
+GeistMono
+  Copyright 2024 The Geist Project Authors (https://github.com/vercel/geist-font.git)
+
+GeistPixel
+  Copyright 2026 The Geist Pixel Project Authors (https://github.com/vercel/geistpixel-font.git)
+
+IBMPlexSerif
+  Copyright 2020 IBM Corp. All rights reserved.
+
+Reserved Font Names y condiciones: ver el texto completo de la licencia en https://openfontlicense.org
