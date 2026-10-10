@@ -14,13 +14,21 @@
   <link rel="preload" href="{{ "fonts/GeistMono-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
   {{ $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+  {{- /* the boot screen plays once per session; hide the page before first paint so it never flashes */}}
+  <script>document.documentElement.classList.add("js");try{if(!sessionStorage.getItem("booted")&&!matchMedia("(prefers-reduced-motion:reduce)").matches){document.documentElement.classList.add("boot");setTimeout(function(){document.documentElement.classList.remove("boot")},12000)}}catch(e){}</script>
+  {{ $js := resources.Get "js/fx.js" | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $js.RelPermalink }}" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">{{ i18n "skip" }}</a>
-<div class="screen">
-  {{ partial "head.html" . }}
-  <main id="main">{{ block "main" . }}{{ end }}</main>
-  {{ partial "foot.html" . }}
+{{ if .IsHome }}<div class="masthead"><h1 class="vh">{{ site.Title }}</h1>{{ partial "banner.html" . }}</div>{{ end }}
+<div class="term{{ if .IsHome }} home{{ end }}">
+  <p class="term-title" aria-hidden="true"><span>{{ partial "ps1.html" . }}</span></p>
+  <div class="screen">
+    {{ partial "head.html" . }}
+    <main id="main">{{ block "main" . }}{{ end }}</main>
+    {{ partial "foot.html" . }}
+  </div>
 </div>
 {{ partial "status.html" . }}
 </body>

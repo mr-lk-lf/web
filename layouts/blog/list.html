@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{ $pag := .Paginate (.Pages.ByDate.Reverse) }}
-<section class="blk"><h1>{{ partial "cmd.html" (dict "cmd" "ls -t" "arg" (printf "%s/" (i18n "blog" | lower | urlize))) }}</h1><div class="out">
+<section class="blk"><h1>{{ partial "cmd.html" (dict "cmd" "ls -t" "arg" (printf "%s/" (i18n "blog" | lower | anchorize))) }}</h1><div class="out">
 {{ if $pag.Pages }}
 <ul class="list">{{ range $pag.Pages }}<li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "2006-01-02" }}</time><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="sum">{{ .Summary }}</span></li>{{ end }}</ul>
 {{ partial "pager.html" . }}

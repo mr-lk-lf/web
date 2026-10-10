@@ -1,1 +1,1 @@
-{{ define "main" }}<section class="blk"><h1>{{ partial "cmd.html" (dict "cmd" "cat" "arg" (printf "%s.md" (.Title | lower | urlize))) }}</h1><div class="out prose">{{ .Content }}</div></section>{{ end }}
+{{ define "main" }}<section class="blk"><h1>{{ partial "cmd.html" (dict "cmd" "cat" "arg" (printf "%s.md" (.Title | lower | anchorize))) }}</h1><div class="out prose">{{ .Content }}</div></section>{{ end }}
