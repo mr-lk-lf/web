@@ -191,7 +191,7 @@
           const set = d === 0 && k === NEAR ? HEAD : f < 0.45 ? BODY : THIN[f < 0.7 ? 0 : f < 0.86 ? 1 : 2];
           const when = d === 0 ? tick : Math.floor((t + hash(c, r, 5) * 9) * (0.3 + hash(c, r, 6)));
           const a = k.a * (d === 0 ? 1.5 : 1 - f * 0.8);
-          ctx.fillStyle = d === 0 ? `rgba(214,232,200,${a})` : `rgba(197,248,153,${a * 0.8})`;
+          ctx.fillStyle = d === 0 ? `rgba(214,232,200,${a})` : `rgba(214,232,200,${a * 0.8})`;
           ctx.fillText(set[Math.floor(hash(c, r, when) * set.length)], c * CW, r * LH);
         }
       }

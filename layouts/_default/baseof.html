@@ -10,7 +10,7 @@
   {{ range .AllTranslations }}<link rel="alternate" hreflang="{{ .Language.LanguageCode }}" href="{{ .Permalink }}">
   {{ end }}
   {{ with site.Home.OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .RelPermalink }}">{{ end }}
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23222623'/%3E%3Cpath d='M3.5 5l3 3-3 3' fill='none' stroke='%237cd3a2' stroke-width='1.6'/%3E%3Cpath d='M8.5 11.5h4' stroke='%23c5f899' stroke-width='1.6'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23222623'/%3E%3Cpath d='M3.5 5l3 3-3 3' fill='none' stroke='%23d6e8c8' stroke-width='1.6'/%3E%3Cpath d='M8.5 11.5h4' stroke='%237e8f85' stroke-width='1.6'/%3E%3C/svg%3E">
   <link rel="preload" href="{{ "fonts/GeistMono-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
   {{ $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}">
