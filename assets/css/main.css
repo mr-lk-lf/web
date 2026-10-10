@@ -71,6 +71,7 @@ html{background:var(--sunken)}
   filter:drop-shadow(0 0 5px var(--glow));animation:glint 9s ease-in-out 1.5s infinite}
 .banner pre+pre{margin-top:calc(var(--fs) * .9);--ink-c:var(--crt-moss);--glow:#a9bd9b38;animation-delay:1.9s}
 .banner i{color:color-mix(in srgb,var(--ink-c) 42%,var(--sunken))}
+.masthead .mark{margin-left:auto;margin-right:calc(var(--fs) * 2)}
 /* the logo: same ink, horn tips that catch the light in turn, an eye that winks */
 .logo{margin:0;padding:0;border:0;border-radius:0;background:none;overflow:visible;flex:none;font:400 var(--fs)/1.12 var(--mono);color:var(--crt-mint);filter:drop-shadow(0 0 5px #d6e8c847)}
 .logo .tip{animation:horn 4.8s ease-in-out infinite}.logo .tip.l{animation-delay:-2.4s}
@@ -230,13 +231,14 @@ canvas.rain{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-eve
   /* phone: no banner, just the logo, centred and sitting on the window's top
      edge; on home the title moves to the bottom edge to make room */
   .ps1 .wide{display:none}.ps1 .narrow{display:inline}
-  .masthead{--fs:9px;justify-content:center;padding:20px 0 0;margin-bottom:calc(var(--fs) * -4.6)}
+  .masthead .mark{margin:0}
+  .masthead{--fs:7px;justify-content:center;padding:20px 0 0;margin-bottom:calc(var(--fs) * -4.6)}
   .banner{display:none}
   /* a strip of page colour only where the window edge passes, so the line
      breaks around the logo without boxing it in */
   .mark{--y:calc(var(--fs) * 4.6);padding:0 1.5ch;background:linear-gradient(to top,transparent calc(var(--y) - 3px),var(--sunken) 0 calc(var(--y) + 3px),transparent 0)}
   .term.home .term-title{top:auto;bottom:-12px}
-  .term.home .screen{padding-top:calc(var(--fs, 9px) * 5)}
+  .term.home .screen{padding-top:calc(var(--fs, 7px) * 5)}
   .term{margin-top:28px}
   .term-title{left:12px;right:12px}
   .screen{padding:22px 14px 8px}

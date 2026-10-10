@@ -21,7 +21,7 @@
 </head>
 <body>
 <a class="skip" href="#main">{{ i18n "skip" }}</a>
-{{ if .IsHome }}<div class="masthead"><h1 class="vh">{{ site.Title }}</h1>{{ partial "logo.html" . }}{{ partial "banner.html" . }}</div>{{ end }}
+{{ if .IsHome }}<div class="masthead"><h1 class="vh">{{ site.Title }}</h1>{{ partial "banner.html" . }}{{ partial "logo.html" . }}</div>{{ end }}
 <div class="term{{ if .IsHome }} home{{ end }}">
   <p class="term-title" aria-hidden="true"><span>{{ partial "ps1.html" . }}</span></p>
   <div class="screen">
