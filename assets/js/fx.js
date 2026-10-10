@@ -278,56 +278,36 @@
     });
   }
 
-  /* ── typewriter ───────────────────────────────────────────────────────
-     Types a phrase, holds it, backspaces it, types the next. Now and then a
-     neighbouring key slips in and gets corrected. */
-  function typer() {
-    const ROWS = ["qwertyuiop", "asdfghjklñ", "zxcvbnm"];
-    const slip = (ch, r) => {
-      for (const row of ROWS) {
-        const i = row.indexOf(ch);
-        if (i >= 0) return row[i === 0 ? 1 : i === row.length - 1 ? i - 1 : i + (r() < 0.5 ? -1 : 1)];
-      }
-      return null;
-    };
-    $$(".typer[data-phrases]").forEach((el) => {
-      const tw = el.querySelector(".tw"), list = JSON.parse(el.dataset.phrases);
-      // screen readers get the whole list once instead of keystrokes
-      const all = document.createElement("span");
-      all.className = "vh";
-      all.textContent = list.join(" · ");
-      tw.after(all);
-      tw.setAttribute("aria-hidden", "true");
-      if (still || !list.length) { el.classList.add("idle"); return; }
-      const r = rand(31), ev = [];
-      let at = 0, text = list[0];
-      const key = (s, w) => { at += w; text = s; ev.push([at, s]); };
-      const delay = (ch) => 0.06 + r() * 0.09 + (ch === " " ? 0.05 + r() * 0.08 : 0) + (r() < 0.05 ? 0.3 : 0);
-      const erase = () => { const n = text.length; for (let k = 0; k < n; k++) key(text.slice(0, -1), k === 0 ? 0 : k === 1 ? 0.18 : 0.045); at += 0.5; };
-      at = 2.6; // the first phrase is already on screen; hold it, then start
-      erase();
-      list.slice(1).concat(list[0]).forEach((p) => {
-        const typo = r() < 0.5 && p.length > 5 ? 3 + Math.floor(r() * (p.length - 4)) : -1;
-        for (let i = 0; i < p.length; i++) {
-          const wrong = i === typo ? slip(p[i], r) : null;
-          if (wrong) { key(text + wrong, delay(p[i])); at += 0.25 + r() * 0.2; key(text.slice(0, -1), 0.1); }
-          key(text + p[i], delay(p[i]) + (i && ".,!?".includes(p[i - 1]) ? 0.15 : 0));
-        }
-        ev.push([at, text, "hold"]);
-        at += 2.2;
-        if (p !== list[0]) erase();
-      });
-      const period = at;
-      let shown = null;
+  /* ── whoami ───────────────────────────────────────────────────────────
+     On the home page the first command is typed in, key by key, then its
+     output prints a line at a time. Waits for the boot screen to clear. */
+  function whoami() {
+    const cmd = document.querySelector(".top .whoami .cmd");
+    if (!cmd || still) return;
+    const top = cmd.closest(".top"), word = cmd.textContent, r = rand(word.length * 13);
+    const out = $$(".founder,.tagline", top);
+    cmd.setAttribute("aria-label", word);
+    top.classList.add("typing");
+    cmd.classList.add("typing");
+    cmd.textContent = "";
+    const run = () => {
+      let at = 0.55;
+      const ev = [...word].map((ch, i) => [(at += 0.07 + r() * 0.1 + (i ? 0 : 0.2)), word.slice(0, i + 1)]);
+      const enter = at + 0.35;
       loop((t) => {
-        const now = t % period;
-        let s = list[0], idle = true, lastAt = 0;
-        for (const [w, x] of ev) { if (w > now) break; s = x; lastAt = w; }
-        idle = now - lastAt > 0.45;
-        if (s !== shown) tw.textContent = shown = s;
-        el.classList.toggle("idle", idle);
+        let s = "";
+        for (const [w, x] of ev) if (w <= t) s = x;
+        if (cmd.textContent !== s) cmd.textContent = s;
+        // the cursor sits solid while keys land and blinks while it waits
+        cmd.classList.toggle("typing", t < enter && (t > 0.55 && t < at + 0.05 || t % 0.9 < 0.5));
+        if (t < enter) return;
+        top.classList.remove("typing");
+        out.forEach((el, i) => { el.style.visibility = "hidden"; setTimeout(() => (el.style.visibility = ""), 90 + i * 110); });
+        return false;
       }, 30);
-    });
+    };
+    if (!doc.classList.contains("boot")) return run();
+    new MutationObserver((_, mo) => { if (!doc.classList.contains("boot")) { mo.disconnect(); run(); } }).observe(doc, { attributes: true, attributeFilter: ["class"] });
   }
 
   /* ── git clone progress ───────────────────────────────────────────────
@@ -394,7 +374,7 @@
   }
 
   const run = (f) => { try { f(); } catch (e) { console.error(e); } };
-  const start = () => [boot, rain, dividers, frames, decodes, typer, progress].forEach(run);
+  const start = () => [boot, rain, dividers, frames, decodes, whoami, progress].forEach(run);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();

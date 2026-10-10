@@ -2,16 +2,13 @@
    Theme "Screen" roles (github.com/mr-lk-lf/comfytosh, palette.json); type is Geist Mono
    and Geist Pixel Square from its design system. Dark only: a screen is always dark.
 
-   Hierarchy, loudest first
-     0. masthead               block-letter banner and logo, crt-mint over crt-ash, faint glow
-     1. article title           Geist Pixel Square 26px, crt-mint
-     2. command heading         bold crt-mint, `$` in mint, argument in ash
-     3. prose                   ink (crt-mint), 15/24; emphasis and markers in mint
-     4. data                    crt-ash (keys, dates, langs, path)
-     5. secondary text          ink-muted (crt-ash): summaries, comments, `#` lines
-   One family only: frosted mint, grey-olive and ebony over carbon, gunmetal and
-   charcoal. Links are grey-olive, underlined. Tangerine survives only as a fill
-   for "you are here" (active nav, pager, status-line mode). Nothing is pure black or white. */
+   Hierarchy: one family, brightest first, each step darker
+     mint    #d6e8c8  links, project names, titles, strong text, prompt user, `$`, cursor
+     ash     #bac1b8  body text, commands, arguments, keys
+     olive   #7e8f85  secondary: summaries, `#` comments, dates, meta, prompt path
+     ebony   #555d50  rules, dividers, frames
+   over carbon, gunmetal and charcoal. Tangerine survives only as a fill for
+   "you are here" (active nav, pager, status-line mode). Nothing is pure black or white. */
 
 @font-face{font-family:"Geist Mono";font-weight:400;font-style:normal;font-display:swap;src:url("../fonts/GeistMono-Regular.woff2") format("woff2")}
 @font-face{font-family:"Geist Mono";font-weight:600;font-style:normal;font-display:swap;src:url("../fonts/GeistMono-SemiBold.woff2") format("woff2")}
@@ -26,12 +23,12 @@
   --signal-tangerine:#ff773d;--signal-grapefruit:#ff6b6b;
   /* roles (Screen) */
   --bg:var(--crt-gunmetal);--surface:var(--crt-charcoal);--sunken:var(--crt-carbon);
-  --border:var(--crt-ebony);--border-strong:var(--crt-olive);
-  --ink:var(--crt-mint);--mute:var(--crt-ash);
-  --accent:var(--signal-tangerine);--on-accent:var(--crt-gunmetal);--accent-ink:var(--crt-olive);
+  --border:var(--crt-charcoal);--border-strong:var(--crt-ebony);
+  --ink:var(--crt-ash);--mute:var(--crt-olive);
+  --accent:var(--signal-tangerine);--on-accent:var(--crt-gunmetal);--accent-ink:var(--crt-mint);
   --focus:var(--crt-mint);--cursor:var(--crt-mint);--selection:#d6e8c833;
-  --prompt-user:var(--crt-mint);--prompt-path:var(--crt-ash);
-  --date:var(--crt-ash);--key:var(--crt-ash);--bright:var(--crt-mint);--marker:var(--crt-mint);
+  --prompt-user:var(--crt-mint);--prompt-path:var(--crt-olive);
+  --date:var(--crt-olive);--key:var(--crt-ash);--bright:var(--crt-mint);--marker:var(--crt-mint);
   --mono:"Geist Mono",ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
   --crt:"Geist Pixel Square","Geist Mono",ui-monospace,monospace;
 }
@@ -41,7 +38,7 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column;color:var(--in
 h1,h2,h3,h4,p,ol,ul,dl,dd,pre,blockquote,figure{margin:0;padding:0;font:inherit}
 ::selection{background:var(--selection)}
 a{color:var(--accent-ink);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--accent-ink) 45%,transparent);text-underline-offset:3px}
-a:hover{color:var(--ink);text-decoration-color:currentColor}
+a:hover{text-decoration-color:currentColor}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:2px}
 i{font-style:normal}
 .skip{position:absolute;left:12px;top:-48px;z-index:10;padding:4px 12px;background:var(--surface);color:var(--ink);border-radius:8px}
@@ -91,16 +88,16 @@ html{background:var(--sunken)}
 /* header */
 .top{padding-bottom:20px}
 .top .founder{margin-top:6px}
-.typer{margin-top:2px;color:var(--ink)}.typer .ps{margin-right:1ch}
-.typer .tw::after{content:"▌";color:var(--cursor);margin-left:1px}
-.typer.idle .tw::after{animation:blink 1.06s steps(1) infinite}
+/* whoami is typed in, then its output prints */
+.whoami .cmd.typing::after{content:"▌";color:var(--cursor);margin-left:1px}
+.js .top.typing .founder,.js .top.typing .tagline{visibility:hidden}
 .top .tagline{margin-top:2px;color:var(--mute);font-style:italic}
 .top .tagline::before{content:"# ";font-style:normal}
 nav.main{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;margin-top:18px;padding-top:14px;border-top:1px dashed var(--border-strong)}
 .top.sub{padding-bottom:12px}.top.sub nav.main{margin-top:0;padding-top:0;border-top:0}
 nav.main .sp{flex:1}
-nav.main a,nav.main span.on,nav.main span.lang{padding:0 8px;color:var(--mute);text-decoration:none}
-nav.main a:hover{color:var(--ink)}
+nav.main a,nav.main span.on,nav.main span.lang{padding:0 8px;color:var(--ink);text-decoration:none}
+nav.main a:hover{color:var(--bright)}
 nav.main .on{background:var(--accent);color:var(--on-accent);font-weight:600}
 nav.main .label{color:var(--mute);padding:0 0 0 8px}
 
@@ -110,7 +107,7 @@ nav.main .label{color:var(--mute);padding:0 0 0 8px}
 /* with js the dashed rule becomes a drawn divider, thin at the ends, heavy mid */
 .js .blk+.blk{border-top:0}
 .rule{height:24px;overflow:hidden;white-space:pre;text-align:center;color:var(--border-strong);user-select:none}
-.rule b{font-weight:400;color:color-mix(in srgb,var(--border-strong) 60%,var(--crt-mint))}
+.rule b{font-weight:400;color:var(--crt-olive)}
 .blk>h1,.blk>h2{margin-bottom:12px;font-size:15px;line-height:24px;font-weight:700;color:var(--ink)}
 .blk>h1 a,.blk>h2 a{text-decoration:none}
 .out{padding-left:2ch;min-width:0}
@@ -125,7 +122,7 @@ time{color:var(--date)}
 /* prose: markdown as a terminal would show it */
 .prose{max-width:72ch}
 .prose>*+*{margin-top:1em}
-.prose h2,.prose h3,.prose h4{color:var(--ink);font-weight:700;margin-top:1.8em}
+.prose h2,.prose h3,.prose h4{color:var(--bright);font-weight:700;margin-top:1.8em}
 .prose h2::before{content:"## ";color:var(--marker)}
 .prose h3::before{content:"### ";color:var(--marker)}
 .prose h4::before{content:"#### ";color:var(--marker)}
@@ -248,4 +245,4 @@ canvas.rain{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-eve
   ol.list li>.meta,ol.list li>a,ol.list li>.sum{grid-column:2!important}
   .status>div{padding:0 16px}
 }
-@media (prefers-reduced-motion:reduce){.cursor,.banner pre,.logo .tip,.logo .lid,.typer.idle .tw::after{animation:none}}
+@media (prefers-reduced-motion:reduce){.cursor,.banner pre,.logo .tip,.logo .lid{animation:none}}
