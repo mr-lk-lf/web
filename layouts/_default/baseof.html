@@ -10,17 +10,25 @@
   {{ range .AllTranslations }}<link rel="alternate" hreflang="{{ .Language.LanguageCode }}" href="{{ .Permalink }}">
   {{ end }}
   {{ with site.Home.OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .RelPermalink }}">{{ end }}
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23222623'/%3E%3Cpath d='M3.5 5l3 3-3 3' fill='none' stroke='%237cd3a2' stroke-width='1.6'/%3E%3Cpath d='M8.5 11.5h4' stroke='%23c5f899' stroke-width='1.6'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23222623'/%3E%3Cpath d='M3.5 5l3 3-3 3' fill='none' stroke='%23d6e8c8' stroke-width='1.6'/%3E%3Cpath d='M8.5 11.5h4' stroke='%237e8f85' stroke-width='1.6'/%3E%3C/svg%3E">
   <link rel="preload" href="{{ "fonts/GeistMono-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
   {{ $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+  {{- /* the boot screen plays once per session; hide the page before first paint so it never flashes */}}
+  <script>document.documentElement.classList.add("js");try{if(!sessionStorage.getItem("booted")&&!matchMedia("(prefers-reduced-motion:reduce)").matches){document.documentElement.classList.add("boot");setTimeout(function(){document.documentElement.classList.remove("boot")},12000)}}catch(e){}</script>
+  {{ $js := resources.Get "js/fx.js" | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $js.RelPermalink }}" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">{{ i18n "skip" }}</a>
-<div class="screen">
-  {{ partial "head.html" . }}
-  <main id="main">{{ block "main" . }}{{ end }}</main>
-  {{ partial "foot.html" . }}
+{{ if .IsHome }}<div class="masthead"><h1 class="vh">{{ site.Title }}</h1>{{ partial "banner.html" . }}{{ partial "logo.html" . }}</div>{{ end }}
+<div class="term{{ if .IsHome }} home{{ end }}">
+  <p class="term-title" aria-hidden="true"><span>{{ partial "ps1.html" . }}</span></p>
+  <div class="screen">
+    {{ partial "head.html" . }}
+    <main id="main">{{ block "main" . }}{{ end }}</main>
+    {{ partial "foot.html" . }}
+  </div>
 </div>
 {{ partial "status.html" . }}
 </body>

@@ -1,11 +1,12 @@
 {{ define "main" }}
+{{ with .Params.repo }}<section class="blk clone"><h2>{{ partial "cmd.html" (dict "cmd" "git clone" "arg" (printf "github.com/%s" .)) }}</h2><div class="out"><pre class="progress" data-labels='["fetching","unpacking","indexing","building","linking"]' hidden></pre></div></section>{{ end }}
 <article class="blk">
   <p class="cmdline"><span class="ps" aria-hidden="true">$</span><span class="cmd">cat</span> <span class="arg">{{ .File.ContentBaseName }}/README.md</span></p>
   <h1 class="title">{{ .Title }}</h1>
   <div class="prose" style="margin-top:12px"><p>{{ .Params.summary }}</p>{{ .Content }}</div>
 </article>
-<section class="blk"><h2>{{ partial "cmd.html" (dict "cmd" "cat" "arg" (printf "%s" (i18n "source" | lower | urlize))) }}</h2><div class="out">
-  <dl class="kv">
+<section class="blk"><h2>{{ partial "cmd.html" (dict "cmd" "cat" "arg" (printf "%s" (i18n "source" | lower | anchorize))) }}</h2><div class="out">
+  <dl class="kv framed">
     <dt>{{ i18n "language" | lower }}</dt><dd>{{ .Params.language }}</dd>
     <dt>{{ i18n "license" | lower }}</dt><dd>{{ .Params.license }}</dd>
     <dt>{{ i18n "published" | lower }}</dt><dd><time>{{ .Date | time.Format "2006-01" }}</time></dd>

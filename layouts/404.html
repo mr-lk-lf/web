@@ -1,0 +1,6 @@
+{{ define "main" }}
+<section class="blk"><h1>{{ partial "cmd.html" (dict "cmd" "cd" "arg" "???") }}</h1><div class="out">
+  <p class="lost" data-phrases="{{ jsonify site.Params.lost }}">{{ index site.Params.lost 0 }}</p>
+  <p class="back"><a href="{{ site.Home.RelPermalink }}">cd ~</a></p>
+</div></section>
+{{ end }}
