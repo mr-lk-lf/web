@@ -198,30 +198,6 @@
     }, 12);
   }
 
-  /* ── dividers ─────────────────────────────────────────────────────────
-     Between blocks: · · ─ ─ ────━━━━━━━━────── ─ ─ · ·, sized to the column,
-     never wider than 59 cells. */
-  function dividers() {
-    const make = (n) => {
-      const h = Math.floor(n / 2);
-      if (h < 12) return "─".repeat(n);
-      const run = h - 8, thin = Math.ceil(run * 0.45);
-      const half = "· · ─ ─ " + "─".repeat(thin) + "<b>" + "━".repeat(run - thin);
-      return half + (n % 2 ? "━" : "") + [...half.replace("<b>", "")].reverse().join("").replace(/^(━*)/, "$1</b>");
-    };
-    const rules = $$(".blk+.blk").map((b) => {
-      const d = document.createElement("div");
-      d.className = "rule";
-      d.setAttribute("aria-hidden", "true");
-      b.before(d);
-      return d;
-    });
-    const draw = () => rules.forEach((d) => (d.innerHTML = make(Math.min(59, colsOf(d)))));
-    draw();
-    let id;
-    addEventListener("resize", () => { clearTimeout(id); id = setTimeout(draw, 120); });
-  }
-
   /* ── decode ───────────────────────────────────────────────────────────
      Text resolves left to right out of flickering glyphs. Spaces and
      length stay put, so nothing reflows while it runs. */
@@ -253,17 +229,8 @@
     });
   }
   function decodes() {
-    $$("h1.title").forEach((el) => decode(el, { label: false }));
-    // command arguments decode the first time they scroll into view
-    const io = "IntersectionObserver" in window && new IntersectionObserver((es) => es.forEach((e) => {
-      if (e.isIntersecting) { io.unobserve(e.target); decode(e.target, { label: false, step: 0.025 }); }
-    }), { rootMargin: "0px 0px -10% 0px" });
-    if (io) $$(".blk>h1 .arg,.blk>h2 .arg,.cmdline .arg").forEach((el) => io.observe(el));
-    // nav links scramble again on hover
-    $$("nav.main a").forEach((a) => {
-      const t = a.textContent;
-      a.addEventListener("mouseenter", () => decode(a, { to: t, lead: 0.08, step: 0.03, label: false }));
-    });
+    // only a blog post's title decodes
+    $$("h1.title[data-decode]").forEach((el) => decode(el, { label: false }));
     // 404: cycles through its phrases, each decoding out of the one before
     $$(".lost[data-phrases]").forEach((el) => {
       const ps = JSON.parse(el.dataset.phrases);
@@ -334,48 +301,40 @@
   }
 
   /* ── git clone progress ───────────────────────────────────────────────
-     Five bars in five styles, each surging and stalling on its own, then a
-     closing line. Plays once, when it comes into view. */
+     One bar that surges and stalls through the clone; its label steps
+     through the stages as it fills, then a closing line. Plays once, when
+     it comes into view. */
   function progress() {
     $$("pre.progress").forEach((pre) => {
       pre.hidden = false;
       const labels = JSON.parse(pre.dataset.labels || "[]");
+      if (!labels.length) return;
       const EIGHTHS = " ▏▎▍▌▋▊▉";
-      const styles = [
-        (p, W) => { const n = Math.floor(p * (W - 2)); return "[" + "=".repeat(n) + (n < W - 2 ? ">" + " ".repeat(W - 3 - n) : "") + "]"; },
-        (p, W) => { const e = Math.round(p * (W - 2) * 8), n = e >> 3; return "▕" + "█".repeat(n) + (n < W - 2 ? EIGHTHS[e & 7] + " ".repeat(W - 3 - n) : "") + "▏"; },
-        (p, W) => { const n = Math.floor(p * (W - 2)); return "[" + "#".repeat(n) + ".".repeat(W - 2 - n) + "]"; },
-        (p, W) => { const L = Math.floor(W / 2), n = Math.floor(p * L + 1e-9); return ("█ ".repeat(n) + "░ ".repeat(L - n)).slice(0, W); },
-        (p, W) => { const h = Math.floor(p * W * 2), n = h >> 1; return "━".repeat(n) + (n < W ? (h & 1 ? "╾" : "─") + "─".repeat(W - 1 - n) : ""); },
-      ];
+      const bar = (p, W) => { const e = Math.round(p * (W - 2) * 8), n = e >> 3; return "▕" + "█".repeat(n) + (n < W - 2 ? EIGHTHS[e & 7] + " ".repeat(W - 3 - n) : "") + "▏"; };
       const ease = (x) => x * x * (3 - 2 * x);
-      const bars = labels.map((label, i) => {
-        const r = rand(i * 7919 + 17), legs = 3 + Math.floor(r() * 3), dt = [], dv = [];
-        for (let j = 0; j < legs; j++) { dt.push(0.5 + r()); dv.push(0.2 + r()); }
-        const st = dt.reduce((a, b) => a + b), sv = dv.reduce((a, b) => a + b), kn = [[0, 0]];
-        let u = 0, v = 0;
-        for (let j = 0; j < legs; j++) kn.push([(u += dt[j] / st), (v += dv[j] / sv)]);
-        kn[legs] = [1, 1];
-        return { label, draw: styles[i % styles.length], start: i * 0.35 + r() * 0.2, dur: [2.1, 1.7, 2.6, 1.9, 2.2][i % 5], kn };
-      });
-      const prog = (b, t) => {
-        const x = (t - b.start) / b.dur;
+      // a run of uneven legs, each eased in and out
+      const r = rand(pre.textContent.length + 17), legs = 6 + Math.floor(r() * 3), dt = [], dv = [];
+      for (let j = 0; j < legs; j++) { dt.push(0.4 + r()); dv.push(0.15 + r()); }
+      const st = dt.reduce((a, b) => a + b), sv = dv.reduce((a, b) => a + b), kn = [[0, 0]];
+      let u = 0, v = 0;
+      for (let j = 0; j < legs; j++) kn.push([(u += dt[j] / st), (v += dv[j] / sv)]);
+      kn[legs] = [1, 1];
+      const start = 0.2, dur = 3.4, total = start + dur;
+      const prog = (t) => {
+        const x = (t - start) / dur;
         if (x <= 0) return 0;
         if (x >= 1) return 1;
         let j = 1;
-        while (b.kn[j][0] < x) j++;
-        const [u0, v0] = b.kn[j - 1], [u1, v1] = b.kn[j];
+        while (kn[j][0] < x) j++;
+        const [u0, v0] = kn[j - 1], [u1, v1] = kn[j];
         return v0 + (v1 - v0) * ease((x - u0) / (u1 - u0));
       };
-      const total = Math.max(...bars.map((b) => b.start + b.dur));
       const frame = (t) => {
-        const W = Math.max(10, Math.min(28, colsOf(pre) - 16));
-        const lines = bars.map((b) => {
-          const p = prog(b, t), pct = (Math.floor(p * 100) + "%").padStart(4);
-          return esc(b.label.slice(0, 9).padEnd(10)) + "<b>" + esc(b.draw(p, W)) + "</b> " + (p >= 1 ? '<span class="ok">' + pct + "</span>" : "<em>" + pct + "</em>");
-        });
-        lines.push(t >= total + 0.2 ? '<span class="ok">done.</span> ' + (total + 0.2).toFixed(1) + "s" : " ");
-        pre.innerHTML = lines.join("\n");
+        const W = Math.max(10, Math.min(32, colsOf(pre) - 16));
+        const p = prog(t), pct = (Math.floor(p * 100) + "%").padStart(4);
+        const label = labels[Math.min(labels.length - 1, Math.floor(p * labels.length))];
+        const line = esc(label.slice(0, 9).padEnd(10)) + "<b>" + esc(bar(p, W)) + "</b> " + (p >= 1 ? '<span class="ok">' + pct + "</span>" : "<em>" + pct + "</em>");
+        pre.innerHTML = line + "\n" + (t >= total + 0.2 ? '<span class="ok">done.</span> ' + (total + 0.2).toFixed(1) + "s" : " ");
       };
       let state = still ? "done" : "wait";
       frame(state === "done" ? 99 : 0);
@@ -397,7 +356,7 @@
   }
 
   const run = (f) => { try { f(); } catch (e) { console.error(e); } };
-  const start = () => [boot, rain, dividers, frames, decodes, typed, progress].forEach(run);
+  const start = () => [boot, rain, frames, decodes, typed, progress].forEach(run);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();

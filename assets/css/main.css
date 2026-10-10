@@ -68,12 +68,16 @@ html{background:var(--sunken)}
 .banner pre+pre{margin-top:calc(var(--fs) * .9);--ink-c:var(--crt-ash);--glow:#bac1b838;animation-delay:1.9s}
 .banner i{color:color-mix(in srgb,var(--ink-c) 42%,var(--sunken))}
 .masthead .mark{margin-left:auto;margin-right:calc(var(--fs) * 2)}
-/* the logo: same ink, horn tips that catch the light in turn, an eye that winks */
+/* the logo: same ink, horn tips that catch the light in turn; the T's are its
+   eyes and the right one winks, its bar dropping to a closed line */
 .logo{margin:0;padding:0;border:0;border-radius:0;background:none;overflow:visible;flex:none;font:400 var(--fs)/1.12 var(--mono);color:var(--crt-mint);filter:drop-shadow(0 0 5px #d6e8c847)}
 .logo .tip{animation:horn 4.8s ease-in-out infinite}.logo .tip.l{animation-delay:-2.4s}
-.logo .lid{color:transparent;animation:wink 6.5s steps(1,end) 2s infinite}.logo .lid.b{animation-delay:2.04s}
+.logo .lid{position:relative;animation:lid 6.5s steps(1,end) 2s infinite}
+.logo .lid::after{content:"▄▄▄▄▄▄";position:absolute;left:0;color:var(--crt-mint);opacity:0;animation:shut 6.5s steps(1,end) 2s infinite}
+.logo .stem{animation:lid 6.5s steps(1,end) 2s infinite}
 @keyframes horn{0%,100%{color:var(--crt-mint);text-shadow:none}45%{color:#f6fcef;text-shadow:0 0 4px #f6fcefb3,0 0 10px #d6e8c899}}
-@keyframes wink{0%{color:transparent}88%{color:var(--crt-mint)}91%{color:transparent}}
+@keyframes lid{0%{color:var(--crt-mint)}88%{color:transparent}92%{color:var(--crt-mint)}}
+@keyframes shut{0%{opacity:0}88%{opacity:1}92%{opacity:0}}
 .ps1 .narrow{display:none}
 @keyframes glint{0%{background-position:120% 0,0 0}22%,100%{background-position:-20% 0,0 0}}
 
@@ -103,10 +107,6 @@ nav.main .label{color:var(--mute);padding:0 0 0 8px}
 /* blocks: a command, then its output */
 .blk{padding:20px 0}
 .blk+.blk{border-top:1px dashed var(--border-strong)}
-/* with js the dashed rule becomes a drawn divider, thin at the ends, heavy mid */
-.js .blk+.blk{border-top:0}
-.rule{height:24px;overflow:hidden;white-space:pre;text-align:center;color:var(--border-strong);user-select:none}
-.rule b{font-weight:400;color:var(--crt-olive)}
 .blk>h1,.blk>h2{margin-bottom:12px;font-size:15px;line-height:24px;font-weight:700;color:var(--ink)}
 .blk>h1 a,.blk>h2 a{text-decoration:none}
 .out{padding-left:2ch;min-width:0}
@@ -134,8 +134,7 @@ time{color:var(--date)}
 .prose ol>li::marker{color:var(--marker)}
 .prose li+li{margin-top:.3em}
 .prose blockquote{padding-left:2ch;border-left:2px solid var(--border-strong);color:var(--mute);font-style:italic}
-.prose hr{border:0;margin:2em 0;height:24px;text-align:center;color:var(--border-strong)}
-.prose hr::after{content:"*     *     *";white-space:pre}
+.prose hr{border:0;border-top:1px dashed var(--border-strong);margin:2em 0}
 .prose img{max-width:100%;height:auto;border:1px solid var(--border);border-radius:8px}
 .prose table{border-collapse:collapse;display:block;overflow-x:auto}
 .prose th{text-align:left;color:var(--key);font-weight:600}
@@ -244,4 +243,4 @@ canvas.rain{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-eve
   ol.list li>.meta,ol.list li>a,ol.list li>.sum{grid-column:2!important}
   .status>div{padding:0 16px}
 }
-@media (prefers-reduced-motion:reduce){.cursor,.banner pre,.logo .tip,.logo .lid,.caret.idle{animation:none}}
+@media (prefers-reduced-motion:reduce){.cursor,.banner pre,.logo .tip,.logo .lid,.logo .lid::after,.logo .stem,.caret.idle{animation:none}}
