@@ -278,36 +278,59 @@
     });
   }
 
-  /* ── whoami ───────────────────────────────────────────────────────────
-     On the home page the first command is typed in, key by key, then its
-     output prints a line at a time. Waits for the boot screen to clear. */
-  function whoami() {
-    const cmd = document.querySelector(".top .whoami .cmd");
-    if (!cmd || still) return;
-    const top = cmd.closest(".top"), word = cmd.textContent, r = rand(word.length * 13);
-    const out = $$(".founder,.tagline", top);
-    cmd.setAttribute("aria-label", word);
-    top.classList.add("typing");
-    cmd.classList.add("typing");
-    cmd.textContent = "";
-    const run = () => {
-      let at = 0.55;
-      const ev = [...word].map((ch, i) => [(at += 0.07 + r() * 0.1 + (i ? 0 : 0.2)), word.slice(0, i + 1)]);
-      const enter = at + 0.35;
-      loop((t) => {
-        let s = "";
-        for (const [w, x] of ev) if (w <= t) s = x;
-        if (cmd.textContent !== s) cmd.textContent = s;
-        // the cursor sits solid while keys land and blinks while it waits
-        cmd.classList.toggle("typing", t < enter && (t > 0.55 && t < at + 0.05 || t % 0.9 < 0.5));
-        if (t < enter) return;
-        top.classList.remove("typing");
-        out.forEach((el, i) => { el.style.visibility = "hidden"; setTimeout(() => (el.style.visibility = ""), 90 + i * 110); });
-        return false;
-      }, 30);
-    };
-    if (!doc.classList.contains("boot")) return run();
-    new MutationObserver((_, mo) => { if (!doc.classList.contains("boot")) { mo.disconnect(); run(); } }).observe(doc, { attributes: true, attributeFilter: ["class"] });
+  /* ── typed text ───────────────────────────────────────────────────────
+     .typed blocks (the about text) type themselves in, key by key, the
+     first time they are on screen and after the boot screen clears. Only
+     text nodes change, so links and emphasis survive; the block keeps its
+     height so nothing below moves. */
+  function typed() {
+    if (still) return;
+    $$(".typed").forEach((box, n) => {
+      const walker = document.createTreeWalker(box, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      for (let t; (t = walker.nextNode()); ) if (t.data.trim()) nodes.push([t, t.data]);
+      if (!nodes.length) return;
+      const r = rand(97 + n);
+      box.setAttribute("aria-label", box.textContent.trim().replace(/\s+/g, " "));
+      box.style.minHeight = box.offsetHeight + "px";
+      nodes.forEach(([t]) => (t.data = ""));
+      const caret = document.createElement("span");
+      caret.className = "caret";
+      caret.setAttribute("aria-hidden", "true");
+      caret.textContent = "\u258c";
+      nodes[0][0].after(caret);
+      // one event per key: [time, node index, characters shown]
+      const ev = [];
+      let at = 0.4;
+      nodes.forEach(([, full], i) => {
+        for (let k = 1; k <= full.length; k++) {
+          const ch = full[k - 1];
+          at += 0.022 + r() * 0.045 + (ch === " " ? r() * 0.04 : 0) + (".,;:".includes(ch) ? 0.18 : 0) + (r() < 0.02 ? 0.25 : 0);
+          ev.push([at, i, k]);
+        }
+      });
+      const run = () => {
+        let e = 0;
+        loop((t) => {
+          let moved = false;
+          while (e < ev.length && ev[e][0] <= t) {
+            const [, i, k] = ev[e++], [node, full] = nodes[i];
+            node.data = full.slice(0, k);
+            if (caret.previousSibling !== node) node.after(caret);
+            moved = true;
+          }
+          caret.classList.toggle("idle", !moved && e >= ev.length);
+          if (e >= ev.length) { box.style.minHeight = ""; return false; }
+        }, 60);
+      };
+      const start = () => {
+        if (!("IntersectionObserver" in window)) return run();
+        const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); run(); } }, { threshold: 0.3 });
+        io.observe(box);
+      };
+      if (!doc.classList.contains("boot")) return start();
+      new MutationObserver((_, mo) => { if (!doc.classList.contains("boot")) { mo.disconnect(); start(); } }).observe(doc, { attributes: true, attributeFilter: ["class"] });
+    });
   }
 
   /* ── git clone progress ───────────────────────────────────────────────
@@ -374,7 +397,7 @@
   }
 
   const run = (f) => { try { f(); } catch (e) { console.error(e); } };
-  const start = () => [boot, rain, dividers, frames, decodes, whoami, progress].forEach(run);
+  const start = () => [boot, rain, dividers, frames, decodes, typed, progress].forEach(run);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
