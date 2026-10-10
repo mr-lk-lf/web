@@ -88,8 +88,10 @@
     for (const s of S) put(s[0] === "~" ? "[ WARN ] " + s.slice(1) : "[  OK  ] " + s, 0.07 + r() * 0.06);
     at += 0.25;
     put("", 0.1);
-    const login = at, who = "user";
-    put((n) => "computer login: " + who.slice(0, Math.floor((n - login) / 0.11)), who.length * 0.11 + 0.25);
+    // the same names the prompt uses: user@computer, or lowkey@lofison on a phone
+    const [who, host] = matchMedia("(max-width: 640px)").matches ? ["lowkey", "lofison"] : ["user", "computer"];
+    const login = at;
+    put((n) => host + " login: " + who.slice(0, Math.floor((n - login) / 0.11)), who.length * 0.11 + 0.25);
     put("password: ", 0.45);
     const last = new Date().toString().split(" ").slice(0, 5).join(" ").toLowerCase();
     put("last login: " + last + " on tty1", 0.25);

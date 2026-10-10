@@ -63,13 +63,21 @@ html{background:var(--sunken)}
 
 /* masthead: block letters with a box-drawing shadow, lowkey in mint, lofison a
    step darker; the glow is barely there and a glint crosses now and then */
-.masthead{width:calc(100% - 48px);max-width:920px;margin:0 auto;padding:36px 0 30px}
-.banner{--fs:min(12px,calc((100vw - 64px) / 70 / .6));font:400 var(--fs)/1.12 var(--mono);letter-spacing:0}
+.masthead{position:relative;z-index:1;display:flex;align-items:center;gap:calc(var(--fs) * 3.6);width:calc(100% - 48px);max-width:920px;margin:0 auto;padding:36px 0 30px;
+  --fs:min(12px,calc((100vw - 64px) / 96 / .6))}
+.banner{font:400 var(--fs)/1.12 var(--mono);letter-spacing:0}
 .banner pre{width:max-content;margin:0;overflow:visible;padding:0;border:0;background:none;border-radius:0;font:inherit;--ink-c:var(--crt-mint);--glow:#d6e8c847;
   color:transparent;background:linear-gradient(100deg,var(--ink-c) 42%,#f4fbec 50%,var(--ink-c) 58%) 120% 0/250% 100% no-repeat,var(--ink-c);-webkit-background-clip:text;background-clip:text;
   filter:drop-shadow(0 0 5px var(--glow));animation:glint 9s ease-in-out 1.5s infinite}
 .banner pre+pre{margin-top:calc(var(--fs) * .9);--ink-c:var(--crt-moss);--glow:#a9bd9b38;animation-delay:1.9s}
 .banner i{color:color-mix(in srgb,var(--ink-c) 42%,var(--sunken))}
+/* the logo: same ink, horn tips that catch the light in turn, an eye that winks */
+.logo{margin:0;padding:0;border:0;border-radius:0;background:none;overflow:visible;flex:none;font:400 var(--fs)/1.12 var(--mono);color:var(--crt-mint);filter:drop-shadow(0 0 5px #d6e8c847)}
+.logo .tip{animation:horn 4.8s ease-in-out infinite}.logo .tip.l{animation-delay:-2.4s}
+.logo .lid{color:transparent;animation:wink 6.5s steps(1,end) 2s infinite}.logo .lid.b{animation-delay:2.04s}
+@keyframes horn{0%,100%{color:var(--crt-mint);text-shadow:none}45%{color:#f6fcef;text-shadow:0 0 4px #f6fcefb3,0 0 10px #d6e8c899}}
+@keyframes wink{0%{color:transparent}88%{color:var(--crt-mint)}91%{color:transparent}}
+.ps1 .narrow{display:none}
 @keyframes glint{0%{background-position:120% 0,0 0}22%,100%{background-position:-20% 0,0 0}}
 
 /* prompt: user@host:path$ */
@@ -219,8 +227,16 @@ canvas.rain{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-eve
 
 @media (max-width:640px){
   .term,.masthead{width:calc(100% - 16px)}
-  .masthead{padding:24px 0 22px}
-  .banner{--fs:min(12px,calc((100vw - 24px) / 71 / .6))}
+  /* phone: no banner, just the logo, centred and sitting on the window's top
+     edge; on home the title moves to the bottom edge to make room */
+  .ps1 .wide{display:none}.ps1 .narrow{display:inline}
+  .masthead{--fs:9px;justify-content:center;padding:20px 0 0;margin-bottom:calc(var(--fs) * -4.6)}
+  .banner{display:none}
+  /* a strip of page colour only where the window edge passes, so the line
+     breaks around the logo without boxing it in */
+  .mark{--y:calc(var(--fs) * 4.6);padding:0 1.5ch;background:linear-gradient(to top,transparent calc(var(--y) - 3px),var(--sunken) 0 calc(var(--y) + 3px),transparent 0)}
+  .term.home .term-title{top:auto;bottom:-12px}
+  .term.home .screen{padding-top:calc(var(--fs, 9px) * 5)}
   .term{margin-top:28px}
   .term-title{left:12px;right:12px}
   .screen{padding:22px 14px 8px}
@@ -231,4 +247,4 @@ canvas.rain{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-eve
   ol.list li>.meta,ol.list li>a,ol.list li>.sum{grid-column:2!important}
   .status>div{padding:0 16px}
 }
-@media (prefers-reduced-motion:reduce){.cursor,.banner pre,.typer.idle .tw::after{animation:none}}
+@media (prefers-reduced-motion:reduce){.cursor,.banner pre,.logo .tip,.logo .lid,.typer.idle .tw::after{animation:none}}
