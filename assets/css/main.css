@@ -101,7 +101,7 @@ nav.main{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;margin-top:1
 nav.main .sp{flex:1}
 nav.main a,nav.main span.on,nav.main span.lang{padding:0 8px;color:var(--ink);text-decoration:none}
 nav.main a:hover{color:var(--bright)}
-nav.main .on{background:var(--accent);color:var(--on-accent);font-weight:600}
+nav.main .on,nav.main span.on{background:var(--accent);color:var(--on-accent);font-weight:600}
 nav.main .label{color:var(--mute);padding:0 0 0 8px}
 
 /* blocks: a command, then its output */
