@@ -1,9 +1,8 @@
 <header class="top{{ if not .IsHome }} sub{{ end }}">
 {{ if .IsHome }}
-  <p>{{ partial "ps1.html" . }} <span class="cmd">whoami</span></p>
+  <p class="whoami">{{ partial "ps1.html" . }} <span class="cmd">whoami</span></p>
   <p class="founder">{{ i18n "founder" }} {{ partial "lofisons.html" . }}</p>
   <p class="tagline">{{ site.Params.tagline }}</p>
-  {{ with site.Params.typer }}<p class="typer" data-prefix="{{ site.Params.typerPrefix }}" data-phrases="{{ jsonify . }}"><span class="ps" aria-hidden="true">&gt;</span>{{ site.Params.typerPrefix }}<span class="tw">{{ index . 0 }}</span></p>{{ end }}
 {{ end }}
   <nav class="main" aria-label="main">
     <a href="{{ site.Home.RelPermalink }}"{{ if .IsHome }} class="on" aria-current="page"{{ end }}>{{ i18n "home" }}</a>

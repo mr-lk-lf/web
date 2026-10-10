@@ -15,8 +15,6 @@ paginate = 3
     weight = 1
     [languages.en.params]
       tagline = "We build for artists, devs and anyone who wants fair tools and content."
-      typerPrefix = "we make "
-      typer = ["fair tools.", "lofi for late nights.", "things that last.", "software for artists."]
       lost = ["404: not found", "decoding the signal", "nothing is lost", "try cd ~"]
   [languages.es]
     languageName = "Español"
@@ -25,8 +23,6 @@ paginate = 3
     weight = 2
     [languages.es.params]
       tagline = "Construimos para artistas, devs y para quienes quieren herramientas y contenido justos."
-      typerPrefix = "hacemos "
-      typer = ["herramientas justas.", "lofi para desvelarse.", "cosas que duran.", "software para artistas."]
       lost = ["404: no encontrado", "decodificando la señal", "nada se pierde", "prueba cd ~"]
 
 [params]
