@@ -88,9 +88,8 @@ html{background:var(--sunken)}
 /* header */
 .top{padding-bottom:20px}
 .top .founder{margin-top:6px}
-/* whoami is typed in, then its output prints */
-.whoami .cmd.typing::after{content:"▌";color:var(--cursor);margin-left:1px}
-.js .top.typing .founder,.js .top.typing .tagline{visibility:hidden}
+/* the about text types itself in behind a block cursor */
+.caret{color:var(--cursor)}.caret.idle{animation:blink 1.06s steps(1) infinite}
 .top .tagline{margin-top:2px;color:var(--mute);font-style:italic}
 .top .tagline::before{content:"# ";font-style:normal}
 nav.main{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;margin-top:18px;padding-top:14px;border-top:1px dashed var(--border-strong)}
@@ -245,4 +244,4 @@ canvas.rain{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-eve
   ol.list li>.meta,ol.list li>a,ol.list li>.sum{grid-column:2!important}
   .status>div{padding:0 16px}
 }
-@media (prefers-reduced-motion:reduce){.cursor,.banner pre,.logo .tip,.logo .lid{animation:none}}
+@media (prefers-reduced-motion:reduce){.cursor,.banner pre,.logo .tip,.logo .lid,.caret.idle{animation:none}}

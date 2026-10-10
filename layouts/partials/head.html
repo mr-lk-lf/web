@@ -1,6 +1,6 @@
 <header class="top{{ if not .IsHome }} sub{{ end }}">
 {{ if .IsHome }}
-  <p class="whoami">{{ partial "ps1.html" . }} <span class="cmd">whoami</span></p>
+  <p>{{ partial "ps1.html" . }} <span class="cmd">whoami</span></p>
   <p class="founder">{{ i18n "founder" }} {{ partial "lofisons.html" . }}</p>
   <p class="tagline">{{ site.Params.tagline }}</p>
 {{ end }}

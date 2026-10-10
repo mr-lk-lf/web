@@ -1,5 +1,5 @@
 {{ define "main" }}
-<section class="blk"><h2>{{ partial "cmd.html" (dict "cmd" "cat" "arg" (printf "%s.md" (i18n "about" | lower | anchorize))) }}</h2><div class="out prose">{{ .Content }}</div></section>
+<section class="blk"><h2>{{ partial "cmd.html" (dict "cmd" "cat" "arg" (printf "%s.md" (i18n "about" | lower | anchorize))) }}</h2><div class="out prose typed">{{ .Content }}</div></section>
 <section class="blk"><h2>{{ partial "cmd.html" (dict "cmd" "ls" "arg" (printf "%s/" (i18n "projects" | lower | anchorize))) }}</h2><div class="out">{{ partial "projects.html" . }}</div></section>
 <section class="blk"><h2>{{ partial "cmd.html" (dict "cmd" "ls -t" "arg" (printf "%s/" (i18n "blog" | lower | anchorize))) }}</h2><div class="out">
 {{ with where site.RegularPages "Section" "blog" }}
