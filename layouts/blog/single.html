@@ -1,7 +1,7 @@
 {{ define "main" }}
 <article class="blk">
   <p class="cmdline"><span class="ps" aria-hidden="true">$</span><span class="cmd">cat</span> <span class="arg">{{ .File.ContentBaseName }}.md</span></p>
-  <h1 class="title">{{ .Title }}</h1>
+  <h1 class="title" data-decode>{{ .Title }}</h1>
   <p class="meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "2006-01-02" }}</time></p>
   <div class="prose" style="margin-top:20px">{{ .Content }}</div>
   <p class="back"><a href="{{ (site.GetPage "/blog").RelPermalink }}">{{ i18n "back" }}</a></p>
