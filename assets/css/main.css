@@ -50,10 +50,10 @@ i{font-style:normal}
 .vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* a terminal window on the desk: rounded frame, its title set into the top edge
-   like ╭─ user@computer:~ ─╮. The glass is a hair translucent so the rain behind
-   it is there only if you look for it. */
+   like ╭─ user@computer:~ ─╮. Same colour as the desk, but opaque: the rain
+   falls around the window, never through it. */
 html{background:var(--sunken)}
-.term{position:relative;flex:1;display:flex;flex-direction:column;width:calc(100% - 48px);max-width:920px;margin:40px auto 0;border:1px solid var(--border-strong);border-radius:12px;background:color-mix(in srgb,var(--bg) 95%,transparent)}
+.term{position:relative;flex:1;display:flex;flex-direction:column;width:calc(100% - 48px);max-width:920px;margin:40px auto 0;border:1px solid var(--border-strong);border-radius:12px;background:var(--sunken)}
 .term.home{margin-top:0}
 .term-title{position:absolute;top:-12px;left:18px;right:18px;display:flex;line-height:22px;font-size:13px;pointer-events:none}
 .term-title>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 1ch;background:var(--sunken);border-radius:4px}
@@ -142,7 +142,7 @@ pre code{padding:0;background:none;color:var(--ink);font-size:inherit}
 .highlight pre{margin:0}
 /* titled frame: ┌─ go ──── */
 .highlight[data-lang]{position:relative;margin-top:calc(1em + 6px)}
-.highlight[data-lang]::before{content:"─ " attr(data-lang) " ─";position:absolute;top:-11px;left:14px;padding:0 4px;font-size:12px;line-height:20px;color:var(--mute);background:var(--bg)}
+.highlight[data-lang]::before{content:"─ " attr(data-lang) " ─";position:absolute;top:-11px;left:14px;padding:0 4px;font-size:12px;line-height:20px;color:var(--mute);background:var(--sunken)}
 /* syntax roles */
 .chroma .c,.chroma .c1,.chroma .cm,.chroma .cs,.chroma .ch,.chroma .cp,.chroma .cpf{color:var(--mute);font-style:italic}
 .chroma .k,.chroma .kd,.chroma .kn,.chroma .kp,.chroma .kr,.chroma .ow{color:var(--phosphor-lime)}
